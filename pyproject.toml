@@ -13,7 +13,14 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: MIT License",
 ]
-dependencies = []
+dependencies = ["PyYAML>=6.0", "Markdown>=3.0", "Jinja2>=3.0"]
 
 [project.urls]
 "Homepage" = "https://github.com/JensKlimke/yamlify"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+packages = ["yamlify"]
+
+[project.scripts]
+yamlify = "yamlify:main"
