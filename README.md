@@ -1,6 +1,6 @@
-# Datify
+# Yamlify
 
-Datify is a document generation tool and python library, which combines yaml and
+Yamlify is a document generation tool and python library, which combines yaml and
 Jinja2.
 
 It includes:

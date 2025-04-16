@@ -1,7 +1,7 @@
 # py files
 build
 dist
-src/datify.egg-info
+src/*.egg-info
 __pycache__
 
 # Outputs
