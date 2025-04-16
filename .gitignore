@@ -1,5 +1,6 @@
 # py files
 build
+dist
 src/datify.egg-info
 __pycache__
 
