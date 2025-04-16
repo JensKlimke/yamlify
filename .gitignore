@@ -1,3 +1,8 @@
+# py files
 build
 src/datify.egg-info
 __pycache__
+
+# Outputs
+*.txt
+
