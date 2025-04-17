@@ -1,0 +1,4 @@
+| Vehicle | Owner |
+|---|---|
+{% for car in data.children.cars.elements %}|{{ car.make }} {{ car.model }}|{{ car.owner.name }}|
+{% endfor %}
