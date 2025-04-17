@@ -4,7 +4,7 @@ import sys
 import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-from datify import read_folder
+from yamlify import read_folder
 
 def create_email_index(data, index):
     for person in data:

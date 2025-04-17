@@ -3,10 +3,10 @@ import sys
 import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-from datify import convert
+from yamlify import convert
 
 
-class TestDatify(unittest.TestCase):
+class TestYamlify(unittest.TestCase):
     def test_convert_single_file(self):
         # Convert data
         result=convert(
@@ -45,7 +45,7 @@ class TestDatify(unittest.TestCase):
         )
         print (result)
         self.assertIn(result[0]['filename'], 'output.txt')
-        self.assertIn(result[0]['content'], '# Cars\n\n\nCorolla\nCivic\nA3')
+        self.assertIn(result[0]['content'], 'Corolla\nCivic\nA3\n')
 
 
 if __name__ == '__main__':
