@@ -1,7 +1,6 @@
-# Yamlify
+# Yamlify Me
 
-Yamlify is a document generation tool and python library, which combines yaml and
-Jinja2.
+Yamlify Me is a document generation tool and python library, which combines yaml and Jinja2.
 
 It includes:
 
