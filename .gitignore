@@ -1,4 +1,9 @@
+# IDEs
+.idea
+.vscode
+
 # py files
+.venv
 build
 dist
 src/*.egg-info
