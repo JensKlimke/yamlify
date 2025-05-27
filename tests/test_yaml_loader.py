@@ -3,7 +3,6 @@ import sys
 import os
 import tempfile
 import shutil
-from pathlib import Path
 import yaml
 
 # Add the src directory to the Python path

@@ -1,6 +1,5 @@
 from .convert import convert
 import argparse
-import sys
 
 
 def parse_arguments(args=None):
