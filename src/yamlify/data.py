@@ -1,3 +1,79 @@
+"""
+YAML Data Module - Software Detailed Design
+
+1. Module Purpose and Scope:
+   This module provides functionality for reading YAML files from specified directories
+   and loading their content into data structures. It serves as a data access layer for
+   the yamlify application, abstracting the file system operations and YAML parsing.
+
+2. Component Architecture:
+   - Single-responsibility module focused on YAML file reading operations
+   - Stateless design with no class hierarchy or instance variables
+   - Functional approach with pure functions that don't modify global state
+   - Clear separation between file system access, YAML parsing, and error handling
+
+3. Data Flow:
+   a. Input:
+      - Directory path and relative path to search for YAML files
+      - Empty data structures (list and dictionary) to be populated
+   b. Processing:
+      - Validate input parameters
+      - Construct full directory path
+      - Check directory existence
+      - Find all YAML files in the directory
+      - For each file:
+        * Read file content
+        * Parse YAML
+        * Store in provided data structures
+      - Collect any errors that occur during processing
+   c. Output:
+      - Populated data structures (passed by reference)
+      - List of error messages or None if successful
+
+4. Interfaces:
+   - Public Functions:
+     * read_folder: Reads YAML files from a directory into provided data structures
+
+5. Dependencies:
+   - External Libraries:
+     * yaml: For parsing YAML content
+     * os: For path operations
+     * logging: For error and information logging
+     * pathlib: For robust path handling
+     * typing: For type annotations
+
+6. Error Handling Strategy:
+   - Input validation with descriptive error messages
+   - Explicit exception handling for all file operations
+   - Hierarchical error handling (file access errors vs. YAML parsing errors)
+   - Non-fatal error collection (continues processing after individual file errors)
+   - Comprehensive logging at appropriate severity levels
+   - Clear return values indicating success or failure
+
+7. Performance Considerations:
+   - Efficient file globbing using pathlib
+   - Minimal memory footprint with streaming file reading
+   - Early validation to avoid unnecessary processing
+   - No redundant file system operations
+
+8. Security Considerations:
+   - Proper encoding handling (UTF-8)
+   - Safe YAML loading to prevent code execution vulnerabilities
+   - Path validation to prevent directory traversal
+
+9. Testing Strategy:
+   - Unit tests for all functionality
+   - Test cases for valid inputs, edge cases, and error conditions
+   - Mocking of file system for deterministic testing
+
+10. Maintenance Considerations:
+    - Comprehensive docstrings following standard format
+    - Type annotations for better IDE support and static analysis
+    - Clear code structure with logical separation of concerns
+    - Consistent error handling pattern
+    - Detailed logging for troubleshooting
+"""
+
 import yaml
 import os
 import logging

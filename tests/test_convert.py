@@ -45,7 +45,13 @@ class TestYamlify(unittest.TestCase):
         )
         print (result)
         self.assertIn(result[0]['filename'], 'output.txt')
-        self.assertIn(result[0]['content'], 'Corolla\nCivic\nA3\n')
+        # Check that the content contains car models
+        self.assertIn('Corolla', result[0]['content'])
+        self.assertIn('Civic', result[0]['content'])
+        self.assertIn('A3', result[0]['content'])
+        # Check that the content contains person names
+        self.assertIn('John Doe', result[0]['content'])
+        self.assertIn('Jane Smith', result[0]['content'])
 
 
 if __name__ == '__main__':

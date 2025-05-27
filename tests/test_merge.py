@@ -32,12 +32,19 @@ class TestDataMerge(unittest.TestCase):
         cars_data = []
         cars_index = {}
 
-        read_folder(os.path.abspath(os.path.join(os.path.dirname(__file__), 'tests/data')), 'persons', persons_data, persons_index)
-        read_folder(os.path.abspath(os.path.join(os.path.dirname(__file__), 'tests/data')), 'cars', cars_data, cars_index)
+        read_folder(os.path.abspath(os.path.join(os.path.dirname(__file__), 'data')), 'persons', persons_data, persons_index)
+        read_folder(os.path.abspath(os.path.join(os.path.dirname(__file__), 'data')), 'cars', cars_data, cars_index)
+
+        # Create a mapping from person names to person data
+        person_name_map = {}
+        for key, person in persons_index.items():
+            # Extract the name from the key (e.g., "john" from "/path/to/john")
+            name = os.path.basename(key)
+            person_name_map[name] = person
 
         # Resolve references manually
         for car in cars_data:
-            car['owner'] = persons_index[car['owner']]
+            car['owner'] = person_name_map[car['owner']]
 
         email_index = {}
         create_email_index(persons_data, email_index)

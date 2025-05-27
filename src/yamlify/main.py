@@ -1,9 +1,18 @@
 from .convert import convert
 import argparse
+import sys
 
 
-def parse_arguments():
-    """Parse command-line arguments."""
+def parse_arguments(args=None):
+    """
+    Parse command-line arguments.
+
+    Args:
+        args (list, optional): List of arguments to parse. If None, uses sys.argv.
+
+    Returns:
+        argparse.Namespace: Parsed arguments.
+    """
     parser = argparse.ArgumentParser(
         description="Generate a document (html, markdown, text, ...) from YAML files using a Jinja2 templates."
     )
@@ -51,35 +60,88 @@ def parse_arguments():
         default=False,
         help="Lists the data structure (for analysis).",
     )
-    return parser.parse_args()
+    return parser.parse_args(args)
 
 
-def main():
-    print("Running main function")
-    # Get arguments
-    args = parse_arguments()
+def main(input_dir=None, template_path=None, output="output.html", 
+         output_filename_template=None, list_structure=False, 
+         processor=None, processor_path=None, recursive=False, 
+         write_files=True, verbose=True):
+    """
+    Main function for the yamlify package. Can be used both as a command-line tool
+    and as a library function.
+
+    Args:
+        input_dir (str, optional): Path to the directory containing YAML files.
+            If None, uses the value from command-line arguments.
+        template_path (str, optional): Path to the Jinja2 template file.
+            If None, uses the value from command-line arguments.
+        output (str, optional): Path to save the rendered document file.
+            Defaults to "output.html".
+        output_filename_template (str, optional): Template for generating multiple
+            output filenames. Defaults to None.
+        list_structure (bool, optional): Whether to print the structure of the
+            loaded data. Defaults to False.
+        processor (str, optional): Name of a Python module with a process function.
+            Defaults to None.
+        processor_path (str, optional): Path to the processor module.
+            Defaults to None.
+        recursive (bool, optional): Whether to load YAML files recursively.
+            Defaults to False.
+        write_files (bool, optional): Whether to write output files to disk.
+            Defaults to True.
+        verbose (bool, optional): Whether to print status messages.
+            Defaults to True.
+
+    Returns:
+        list: A list of dictionaries, each containing:
+            - 'filename': The output filename
+            - 'content': The rendered content
+    """
+    if verbose:
+        print("Running yamlify")
+
+    # If input_dir or template_path are not provided, get them from command-line arguments
+    if input_dir is None or template_path is None:
+        args = parse_arguments()
+
+        # Use command-line arguments for any parameters that weren't provided
+        input_dir = input_dir or args.input_dir
+        template_path = template_path or args.template_path
+        output = output if output != "output.html" else args.output
+        output_filename_template = output_filename_template or args.output_filename_template
+        list_structure = list_structure or args.list_structure
+        processor = processor or args.processor
+        processor_path = processor_path or args.processor_path
+        recursive = recursive or args.recursive
+
     # Read data and convert
     result = convert(
-        input_dir=args.input_dir,
-        template_path=args.template_path,
-        output=args.output,
-        output_filename_template=args.output_filename_template,
-        list_structure=args.list_structure,
-        processor=args.processor,
-        processor_path=args.processor_path,
-        recursive=args.recursive,
+        input_dir=input_dir,
+        template_path=template_path,
+        output=output,
+        output_filename_template=output_filename_template,
+        list_structure=list_structure,
+        processor=processor,
+        processor_path=processor_path,
+        recursive=recursive,
     )
 
-    # Generate output files
-    for item in result:
-        # Get filename and content
-        filename = item["filename"]
-        content = item["content"]
-        # Write files
-        with open(filename, "w", encoding="utf-8") as file:
-            file.write(content)
-        # Log
-        print(f"Output file '{filename}' has been generated successfully.")
+    # Generate output files if requested
+    if write_files:
+        for item in result:
+            # Get filename and content
+            filename = item["filename"]
+            content = item["content"]
+            # Write files
+            with open(filename, "w", encoding="utf-8") as file:
+                file.write(content)
+            # Log if verbose
+            if verbose:
+                print(f"Output file '{filename}' has been generated successfully.")
+
+    # Return the result for library use
+    return result
 
 
 if __name__ == "__main__":
