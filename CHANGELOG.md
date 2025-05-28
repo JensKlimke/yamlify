@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated pyproject.toml with more classifiers and simplified license-files field
 - Changed version from development (0.1.1-dev02) to release (0.1.1)
 - Updated LICENSE file with correct copyright year
+- Added --version flag to command-line interface
 
 ## [0.1.1]
 

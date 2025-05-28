@@ -53,6 +53,7 @@ yamlify <input_dir> <template_path> [options]
 - `-o, --output`: Path to save the rendered document file (default: output.html)
 - `-f, --output_filename_template`: Template for generating multiple output files
 - `-l, --list_structure`: List the data structure for analysis
+- `--version`: Show the version and exit
 
 For detailed help:
 

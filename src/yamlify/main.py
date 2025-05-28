@@ -1,5 +1,45 @@
 from .convert import convert
 import argparse
+import importlib.metadata
+import os
+import re
+
+
+def get_version():
+    """
+    Get the package version.
+
+    First tries to get the version from the installed package metadata.
+    If that fails (e.g., when running from source), tries to read the version
+    from pyproject.toml. If that fails, uses the __version__ variable from __init__.py.
+
+    Returns:
+        str: The package version.
+    """
+    try:
+        return importlib.metadata.version('yamlify-me')
+    except importlib.metadata.PackageNotFoundError:
+        # Package is not installed, try to read version from pyproject.toml
+        try:
+            # Find the pyproject.toml file
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            project_root = os.path.dirname(os.path.dirname(current_dir))
+            pyproject_path = os.path.join(project_root, 'pyproject.toml')
+
+            if os.path.exists(pyproject_path):
+                with open(pyproject_path, 'r') as f:
+                    content = f.read()
+                    # Use regex to find the version
+                    match = re.search(r'version\s*=\s*"([^"]+)"', content)
+                    if match:
+                        return match.group(1)
+
+            # If we couldn't find the version in pyproject.toml, use the __version__ from __init__.py
+            from . import __version__
+            return __version__
+        except Exception:
+            # If all else fails, return a default
+            return "unknown"
 
 
 def parse_arguments(args=None):
@@ -58,6 +98,12 @@ def parse_arguments(args=None):
         action="store_true",
         default=False,
         help="Lists the data structure (for analysis).",
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"%(prog)s {get_version()}",
+        help="Show the version and exit.",
     )
     return parser.parse_args(args)
 
