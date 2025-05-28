@@ -4,8 +4,6 @@ Yamlify Package - Software Detailed Design
 This package provides functionality for converting YAML files to rendered output
 using Jinja2 templates. It serves as a tool for generating documents from YAML data.
 
-Version: 0.2.0
-
 The package is organized into several modules:
 - convert: Main conversion functionality
 - yaml_loader: YAML file loading
@@ -33,7 +31,7 @@ Public API:
   - show_structure: Function for displaying the structure of a dictionary
 """
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 from .main import main
 from .convert import convert

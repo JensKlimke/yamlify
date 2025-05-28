@@ -111,7 +111,7 @@ def parse_arguments(args=None):
 def main(input_dir=None, template_path=None, output="output.html", 
          output_filename_template=None, list_structure=False, 
          processor=None, processor_path=None, recursive=False, 
-         write_files=True, verbose=True):
+         write_files=True, verbose=True, return_result=None):
     """
     Main function for the yamlify package. Can be used both as a command-line tool
     and as a library function.
@@ -137,12 +137,19 @@ def main(input_dir=None, template_path=None, output="output.html",
             Defaults to True.
         verbose (bool, optional): Whether to print status messages.
             Defaults to True.
+        return_result (bool, optional): Whether to return the result.
+            If None, returns the result only when not called from command line.
+            Defaults to None.
 
     Returns:
-        list: A list of dictionaries, each containing:
+        list or None: If return_result is True, returns a list of dictionaries, each containing:
             - 'filename': The output filename
             - 'content': The rendered content
+            If return_result is False, returns None.
     """
+    # Flag to indicate whether the function was called with both input_dir and template_path provided
+    called_as_library = input_dir is not None and template_path is not None
+
     if verbose:
         print("Running yamlify")
 
@@ -185,9 +192,16 @@ def main(input_dir=None, template_path=None, output="output.html",
             if verbose:
                 print(f"Output file '{filename}' has been generated successfully.")
 
-    # Return the result for library use
-    return result
+    # Determine whether to return the result
+    if return_result is None:
+        # If called as a library function, return the result
+        # If called from command line, don't return the result
+        return result if called_as_library else None
+    elif return_result:
+        return result
+    else:
+        return None
 
 
 if __name__ == "__main__":
-    main()
+    main(return_result=False)

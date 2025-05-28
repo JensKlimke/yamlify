@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "yamlify-me"
-version = "0.2.0"
+version = "0.2.1"
 description = "Yamlify Me is a document generation tool and python library, which combines yaml and Jinja2."
 readme = "README.md"
 authors = [{ name = "Jens Klimke", email = "jens.klimke@rwth-aachen.de" }]
