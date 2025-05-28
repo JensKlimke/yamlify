@@ -336,6 +336,29 @@ Renders a Jinja2 template with the provided data.
 - **Returns**:
   - Rendered template as a string
 
+#### `main(input_dir=None, template_path=None, output="output.html", output_filename_template=None, list_structure=False, processor=None, processor_path=None, recursive=False, write_files=True, verbose=True, return_result=None)`
+
+Main function for the yamlify package. Can be used both as a command-line tool and as a library function.
+
+- **Parameters**:
+  - `input_dir` (str, optional): Path to the directory containing YAML files
+  - `template_path` (str, optional): Path to the Jinja2 template file
+  - `output` (str, optional): Path to save the rendered document file
+  - `output_filename_template` (str, optional): Template for generating multiple output filenames
+  - `list_structure` (bool, optional): Whether to print the structure of the loaded data
+  - `processor` (str, optional): Name of a Python module with a process function
+  - `processor_path` (str, optional): Path to the processor module
+  - `recursive` (bool, optional): Whether to load YAML files recursively
+  - `write_files` (bool, optional): Whether to write output files to disk
+  - `verbose` (bool, optional): Whether to print status messages
+  - `return_result` (bool, optional): Whether to return the result. If None, returns the result only when not called from command line
+
+- **Returns**:
+  - List of dictionaries or None: If return_result is True, returns a list of dictionaries, each containing:
+    - 'filename': The output filename
+    - 'content': The rendered content
+  - If return_result is False, returns None
+
 ### Custom Template Filters
 
 #### `markdown_to_html(text)`
