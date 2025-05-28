@@ -2,6 +2,9 @@
 .idea
 .vscode
 
+# Local config
+.env
+
 # py files
 .venv
 build
